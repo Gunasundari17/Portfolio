@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guna Sundari S | Business Transformation Associate</title>
+    <meta name="description" content="Premium portfolio of Guna Sundari S, Business Transformation Associate.">
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Framer Motion for Animations -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+
+    <!-- Tailwind CSS (via CDN for speed in this environment) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0A2540',
+                        secondary: '#3A5BA0',
+                        accent: '#6366f1',
+                        dark: '#0f172a',
+                        light: '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #1e3a8a, #6366f1, #0f766e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0A2540, #163a5f);
+            background-size: 200% 200%;
+            animation: gradient-x 20s ease infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { motion, AnimatePresence, useScroll, useTransform, useInView } = window.Motion;
+
+        // --- Icons ---
+        const IconMenu = () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>;
+        const IconX = () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>;
+        const IconDownload = () => <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>;
+        const IconChevronDown = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>;
+        const IconChevronUp = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>;
+        const IconLinkedin = () => <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>;
+        const IconMail = () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>;
+        const IconCheck = () => <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>;
+
+        // --- Data ---
+        const DATA = {
+            name: "Guna Sundari S",
+            role: "Business Transformation Associate",
+            headline: "Turning complex business problems into structured, scalable solutions.",
+            email: "guna.sundarirk@gmail.com",
+            linkedin: "https://www.linkedin.com/in/guna-sundari-settu-9052b51a2/",
+            about: "I am a Business Analyst with hands-on experience in requirements elicitation, stakeholder collaboration, Agile delivery, and transformation initiatives. I specialize in strategy consulting, billing optimization, and operational process improvements.",
+            skills: [
+                { category: "Business Analysis", items: ["Requirements Elicitation", "Stakeholder Management", "Process Mapping", "Gap & Impact Analysis", "Traceability"], color: "bg-blue-100 text-blue-800" },
+                { category: "Agile & Delivery", items: ["Sprint Planning", "Backlog Refinement", "Scope Management", "Change Management", "Scenario Validation"], color: "bg-teal-100 text-teal-800" },
+                { category: "Billing & Resources", items: ["Billing Process Analysis", "Utilization Tracking", "Effort Estimation", "Invoice Documentation"], color: "bg-indigo-100 text-indigo-800" },
+                { category: "Tools & Tech", items: ["JIRA & Confluence", "MS Visio", "Excel & PowerPoint", "SQL (Basic)", "API Concepts"], color: "bg-purple-100 text-purple-800" }
+            ],
+            experience: [
+                {
+                    role: "Business Transformation Associate",
+                    company: "Ideassion Technology Solutions",
+                    period: "Jun 2023 – Present",
+                    description: "Driving digital transformation through structured requirements and agile execution.",
+                    points: [
+                        "Identified, analyzed, and structured requirements for web and mobile initiatives.",
+                        "Created comprehensive BRDs, FRDs, user stories, and workflows.",
+                        "Supported Agile ceremonies and ensured smooth sprint execution.",
+                        "Coordinated UAT and validated business outcomes."
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    title: "Ackumen Platform",
+                    client: "Buckman (Chemical Industry)",
+                    role: "Business Analyst",
+                    problem: "Complex chemical management needed a streamlined digital tracking system to reduce manual errors.",
+                    actions: "Conducted workshops, mapped processes, and defined detailed requirements.",
+                    delivered: ["BRDs", "Process Flows", "User Stories"],
+                    impact: "Improved tracking efficiency by 30% and enhanced stakeholder alignment.",
+                    billing: "Tracked resource hours against checking billing milestones.",
+                    tags: ["Analysis", "Process", "Billing"]
+                },
+                {
+                    title: "Nippon Production Support",
+                    client: "Nippon Paint",
+                    role: "Business Analyst",
+                    problem: "Website functionality gaps caused production delays and user complaints.",
+                    actions: "Worked closely with Sales team to identify real-time issues and prioritize fixes.",
+                    delivered: ["Website Requirements Analysis", "Gap Analysis Reports"],
+                    impact: "Stabilized production issues and clarified the enhancement roadmap.",
+                    billing: null,
+                    tags: ["Support", "Analysis"]
+                },
+                {
+                    title: "Website Requirements Analysis",
+                    client: "Internal / Confidential",
+                    role: "Business Analyst",
+                    problem: "Legacy website had high bounce rates and poor UX.",
+                    actions: "Provided content strategy and UI inputs for better UX.",
+                    delivered: ["UI Wireframes Inputs", "Content Strategy Doc"],
+                    impact: "Established a clear roadmap for the UI team.",
+                    billing: null,
+                    tags: ["UX", "Content"]
+                },
+                {
+                    title: "Alelo Mobile App",
+                    client: "EdTech Client",
+                    role: "Business Analyst",
+                    problem: "Need for an intuitive mobile learning experience to increase student engagement.",
+                    actions: "Collaborated with UI/UX team to define intuitive flows.",
+                    delivered: ["Mobile App User Stories", "UI/UX Collaboration"],
+                    impact: "Enhanced user engagement through clear feature definitions.",
+                    billing: null,
+                    tags: ["Mobile", "EdTech"]
+                }
+            ],
+            billingFeature: {
+                title: "Billing & Resource Management",
+                points: ["Billing process analysis", "Resource allocation & utilization tracking", "Effort tracking and billing requirement documentation"]
+            },
+            education: [
+                { title: "MCA", institute: "Measi Institute of Information Technology", score: "90%" },
+                { title: "ECBA", institute: "IIBA Certification", score: "Certified" },
+                { title: "Appium Mobile Automation", institute: "The Test Tribe", score: "Certified" }
+            ]
+        };
+
+        // --- Components ---
+
+        const Nav = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const { scrollY } = useScroll();
+            const [scrolled, setScrolled] = useState(false);
+
+            useEffect(() => {
+                return scrollY.onChange((latest) => setScrolled(latest > 50));
+            }, [scrollY]);
+
+            return (
+                <motion.header
+                    className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}
+                    initial={{ y: -100 }}
+                    animate={{ y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <div className="container mx-auto px-6 flex justify-between items-center">
+                        <a href="#" className={`text-2xl font-bold tracking-tight ${scrolled ? 'text-primary' : 'text-white'} transition-colors`}>
+                            {DATA.name.split(' ')[0]}<span className="text-secondary">.</span>
+                        </a>
+
+                        <div className="hidden md:flex space-x-8">
+                            {['About', 'Skills', 'Experience', 'Projects', 'Contact'].map((item) => (
+                                <a key={item} href={`#${item.toLowerCase()}`} className={`font-medium hover:text-secondary transition-colors ${scrolled ? 'text-gray-700' : 'text-gray-100'}`}>
+                                    {item}
+                                </a>
+                            ))}
+                        </div>
+
+                        <button className="md:hidden text-gray-600 focus:outline-none" onClick={() => setIsOpen(!isOpen)}>
+                            <div className={`${scrolled ? 'text-gray-800' : 'text-white'}`}>
+                                {isOpen ? <IconX /> : <IconMenu />}
+                            </div>
+                        </button>
+                    </div>
+
+                    {/* Mobile Menu */}
+                    <AnimatePresence>
+                        {isOpen && (
+                            <motion.nav
+                                className="absolute top-full left-0 w-full bg-white shadow-lg md:hidden"
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <ul className="flex flex-col p-6 space-y-4 text-center">
+                                    {['About', 'Skills', 'Experience', 'Projects', 'Contact'].map((item) => (
+                                        <li key={item}>
+                                            <a href={`#${item.toLowerCase()}`} className="block text-gray-700 text-lg font-medium hover:text-primary" onClick={() => setIsOpen(false)}>
+                                                {item}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.nav>
+                        )}
+                    </AnimatePresence>
+                </motion.header>
+            );
+        };
+
+        const Hero = () => (
+            <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden hero-gradient text-white">
+                <div className="absolute inset-0 bg-black/10"></div>
+                <div className="container mx-auto px-6 relative z-10 text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                    >
+                        <h2 className="text-xl md:text-2xl font-medium mb-4 text-blue-200 uppercase tracking-widest">{DATA.role}</h2>
+                        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
+                            {DATA.name}
+                        </h1>
+                        <p className="text-lg md:text-2xl text-gray-100 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+                            {DATA.headline}
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <motion.a
+                                href="#projects"
+                                className="px-8 py-4 bg-white text-primary font-bold rounded-full shadow-lg hover:shadow-xl hover:bg-gray-100 transition-all transform hover:-translate-y-1"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                View Projects
+                            </motion.a>
+                            <motion.a
+                                href="Gunasundari_Resume_1.pdf"
+                                download="Gunasundari_Resume_1.pdf"
+                                className="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all flex items-center justify-center"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                Download Resume <IconDownload />
+                            </motion.a>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* Scroll Indicator */}
+                <motion.div
+                    className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                >
+                    <IconChevronDown />
+                </motion.div>
+            </section>
+        );
+
+        const SectionTitle = ({ title, subtitle }) => (
+            <div className="text-center mb-16">
+                <motion.h2
+                    className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {title}
+                </motion.h2>
+                <motion.div
+                    className="h-1 w-20 bg-secondary mx-auto rounded-full"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: 80 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                ></motion.div>
+            </div>
+        );
+
+        const About = () => (
+            <section id="about" className="py-24 bg-white">
+                <div className="container mx-auto px-6">
+                    <SectionTitle title="About Me" />
+                    <div className="max-w-4xl mx-auto">
+                        <motion.div
+                            className="bg-light p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 text-center"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                                {DATA.about}
+                            </p>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Skills = () => (
+            <section id="skills" className="py-24 bg-gray-50">
+                <div className="container mx-auto px-6">
+                    <SectionTitle title="Core Expertise" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {DATA.skills.map((skillGroup, idx) => (
+                            <motion.div
+                                key={idx}
+                                className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border-t-4 border-secondary"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                                whileHover={{ y: -5 }}
+                            >
+                                <h3 className="text-xl font-bold mb-6 text-gray-900">{skillGroup.category}</h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {skillGroup.items.map((item, i) => (
+                                        <span key={i} className={`text-sm px-3 py-1 rounded-full font-medium ${skillGroup.color}`}>
+                                            {item}
+                                        </span>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Experience = () => (
+            <section id="experience" className="py-24 bg-white">
+                <div className="container mx-auto px-6">
+                    <SectionTitle title="Professional Experience" />
+                    <div className="max-w-4xl mx-auto">
+                        {DATA.experience.map((job, idx) => (
+                            <motion.div
+                                key={idx}
+                                className="relative pl-8 border-l-4 border-gray-200"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                            >
+                                <div className="absolute -left-3 top-0 w-6 h-6 bg-secondary rounded-full border-4 border-white shadow-sm"></div>
+                                <div className="mb-12">
+                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
+                                        <h3 className="text-2xl font-bold text-primary">{job.role}</h3>
+                                        <span className="text-sm font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full mt-2 sm:mt-0">{job.period}</span>
+                                    </div>
+                                    <h4 className="text-lg font-medium text-gray-800 mb-4">{job.company}</h4>
+                                    <p className="text-gray-600 mb-6 italic">{job.description}</p>
+                                    <ul className="space-y-3">
+                                        {job.points.map((point, i) => (
+                                            <li key={i} className="flex items-start text-gray-700">
+                                                <IconCheck />
+                                                <span>{point}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const ProjectCard = ({ project }) => {
+            const [expanded, setExpanded] = useState(false);
+
+            return (
+                <motion.div
+                    className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    layout
+                >
+                    <div className="p-8">
+                        <div className="mb-4">
+                            <span className="text-xs font-bold tracking-wider text-secondary uppercase">{project.client}</span>
+                            <h3 className="text-2xl font-bold text-gray-900 mt-1">{project.title}</h3>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2 mb-6">
+                            {project.tags.map((tag, i) => (
+                                <span key={i} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md font-medium">{tag}</span>
+                            ))}
+                        </div>
+
+                        <div className="space-y-4 mb-6">
+                            <div>
+                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wide mb-1">Problem</h4>
+                                <p className="text-gray-700">{project.problem}</p>
+                            </div>
+                        </div>
+
+                        <motion.button
+                            className="bg-primary/5 text-primary px-6 py-2 rounded-lg font-semibold hover:bg-primary/10 transition-colors flex items-center w-full justify-center md:w-auto"
+                            onClick={() => setExpanded(!expanded)}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            {expanded ? 'Show Less' : 'View Full Case Study'}
+                            <span className={`ml-2 transform transition-transform ${expanded ? 'rotate-180' : ''}`}>
+                                <IconChevronDown />
+                            </span>
+                        </motion.button>
+
+                        <AnimatePresence>
+                            {expanded && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="pt-6 mt-6 border-t border-gray-100 space-y-6"
+                                >
+                                    <div>
+                                        <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wide mb-1">My Role</h4>
+                                        <p className="text-gray-700">{project.role}</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-bold text-secondary uppercase tracking-wide mb-1">Actions & Deliverables</h4>
+                                        <p className="text-gray-700 mb-2">{project.actions}</p>
+                                        <ul className="list-disc list-inside text-gray-600 text-sm pl-2">
+                                            {project.delivered.map((d, i) => <li key={i}>{d}</li>)}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-bold text-accent uppercase tracking-wide mb-1">Impact</h4>
+                                        <p className="text-gray-800 font-medium">{project.impact}</p>
+                                    </div>
+
+                                    {project.billing && (
+                                        <div className="bg-green-50 p-4 rounded-lg border border-green-100">
+                                            <div className="flex items-center mb-2">
+                                                <svg className="w-5 h-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                <h4 className="text-sm font-bold text-green-800 uppercase tracking-wide">Billing & Resource Mgmt</h4>
+                                            </div>
+                                            <p className="text-green-900 text-sm">{project.billing}</p>
+                                        </div>
+                                    )}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </motion.div>
+            );
+        };
+
+        const Projects = () => (
+            <section id="projects" className="py-24 bg-gray-50">
+                <div className="container mx-auto px-6">
+                    <SectionTitle title="Featured Projects" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {DATA.projects.map((proj, idx) => (
+                            <ProjectCard key={idx} project={proj} />
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const BillingFeature = () => (
+            <section className="py-20 bg-primary text-white">
+                <div className="container mx-auto px-6 text-center">
+                    <h2 className="text-3xl font-bold mb-12">{DATA.billingFeature.title}</h2>
+                    <div className="flex flex-wrap justify-center gap-8">
+                        {DATA.billingFeature.points.map((pt, idx) => (
+                            <motion.div
+                                key={idx}
+                                className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 max-w-xs flex-1 min-w-[250px]"
+                                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.2)' }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                            >
+                                <p className="font-medium text-lg">{pt}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Education = () => (
+            <section className="py-24 bg-white">
+                <div className="container mx-auto px-6">
+                    <SectionTitle title="Education & Certifications" />
+                    <div className="flex flex-wrap justify-center gap-6">
+                        {DATA.education.map((edu, idx) => (
+                            <motion.div
+                                key={idx}
+                                className="bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-100 text-center flex-1 min-w-[280px] max-w-sm"
+                                whileHover={{ y: -5, shadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)" }}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                            >
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">{edu.title}</h3>
+                                <p className="text-gray-600 mb-3">{edu.institute}</p>
+                                {edu.score && <span className="inline-block bg-secondary/10 text-secondary text-sm font-bold px-3 py-1 rounded-full">{edu.score}</span>}
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Contact = () => (
+            <section id="contact" className="py-24 bg-dark text-white text-center">
+                <div className="container mx-auto px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-4xl font-bold mb-6">Let's solve business problems together.</h2>
+                        <div className="flex justify-center gap-6 mt-10">
+                            <motion.a
+                                href={`mailto:${DATA.email}`}
+                                className="flex items-center gap-3 bg-primary hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold transition-all"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <IconMail /> Email Me
+                            </motion.a>
+                            <motion.a
+                                href={DATA.linkedin}
+                                target="_blank"
+                                className="flex items-center gap-3 bg-transparent border-2 border-white hover:bg-white/10 text-white px-8 py-4 rounded-full font-bold transition-all"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <IconLinkedin /> LinkedIn
+                            </motion.a>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+        );
+
+        const App = () => {
+            return (
+                <div className="antialiased text-gray-800">
+                    <Nav />
+                    <Hero />
+                    <About />
+                    <Skills />
+                    <Experience />
+                    <Projects />
+                    <BillingFeature />
+                    <Education />
+                    <Contact />
+
+                    <footer className="bg-dark text-gray-500 py-8 text-center text-sm border-t border-gray-800">
+                        <div className="container mx-auto px-6">
+                            &copy; 2024 {DATA.name}. Built with React & Tailwind.
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

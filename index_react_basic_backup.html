@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guna Sundari S | Business Transformation Associate</title>
+    <meta name="description" content="Portfolio of Guna Sundari S, implemented in React.">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        /* Additional React-specific styles */
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Simple Icons ---
+        const IconMenu = () => <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>;
+        const IconX = () => <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>;
+        const IconDownload = () => <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>;
+        const IconChevronDown = () => <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"></polyline></svg>;
+        const IconChevronUp = () => <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15"></polyline></svg>;
+
+        // --- Data ---
+        const PORTFOLIO_DATA = {
+            name: "Guna Sundari S",
+            role: "Business Transformation Associate",
+            headline: "Translating business problems into structured, scalable solutions.",
+            email: "guna.sundarirk@gmail.com",
+            linkedin: "https://www.linkedin.com/in/guna-sundari-settu-9052b51a2/",
+            about: `I am a Business Analyst with hands-on experience in requirements elicitation, stakeholder collaboration, business process documentation, and exposure to strategy consulting initiatives. I specialize in bridging the gap between business needs and technical implementation, with a focus on billing efficiency and resource optimization.`,
+            skills: [
+                { category: "Business Analysis", items: ["Requirements Elicitation", "Stakeholder Management", "Process Mapping", "Gap & Impact Analysis", "Traceability"] },
+                { category: "Agile & Delivery", items: ["Sprint Planning", "Backlog Refinement", "Scope & Change Management", "Business Scenario Validation"] },
+                { category: "Billing & Resources", items: ["Billing Analysis", "Utilization Tracking", "Effort Estimation", "Invoice Documentation"] },
+                { category: "Tools & Tech", items: ["JIRA & Confluence", "MS Visio", "Excel & PowerPoint", "SQL (Basic)", "API Concepts"] }
+            ],
+            experience: [
+                {
+                    role: "Business Transformation Associate",
+                    company: "Ideassion Technology Solutions",
+                    period: "Jun 2023 – Present",
+                    points: [
+                        "Identified, analyzed, and structured requirements for web and mobile initiatives.",
+                        "Created comprehensive BRDs, FRDs, user stories, and workflows.",
+                        "Supported Agile ceremonies and ensured smooth sprint execution.",
+                        "Coordinated User Acceptance Testing (UAT) and validated business outcomes.",
+                        "Managed Billing & Resources: handled billing analysis, utilization tracking, and documentation."
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    title: "Ackumen Platform",
+                    client: "Buckman (Chemical Industry)",
+                    role: "Business Analyst",
+                    problem: "Complex chemical management needed a streamlined digital tracking system to reduce manual errors.",
+                    delivered: "BRDs, Process Flows, User Stories.",
+                    impact: "Improved tracking efficiency by 30% and enhanced stakeholder alignment.",
+                    billing: "Tracked resource hours against checking billing milestones."
+                },
+                {
+                    title: "Nippon Production Support",
+                    client: "Nippon Paint",
+                    role: "Business Analyst",
+                    problem: "Website functionality gaps caused production delays and user complaints.",
+                    delivered: "Website Requirements Analysis, Gap Analysis Reports.",
+                    impact: "Stabilized production issues and clarified the enhancement roadmap.",
+                    billing: null
+                },
+                {
+                    title: "Alelo Mobile App",
+                    client: "EdTech Client",
+                    role: "Business Analyst",
+                    problem: "Need for an intuitive mobile learning experience to increase student engagement.",
+                    delivered: "Mobile App User Stories, UI/UX Collaboration.",
+                    impact: "Enhanced user engagement through clear feature definitions and intuitive flows.",
+                    billing: null
+                }
+            ],
+            education: [
+                { title: "MCA", institute: "Measi Institute of Information Technology", score: "90%" },
+                { title: "ECBA", institute: "IIBA Certification", score: null },
+                { title: "Appium Mobile Automation", institute: "The Test Tribe", score: null }
+            ]
+        };
+
+        // --- Components ---
+
+        const Nav = () => {
+            const [isOpen, setIsOpen] = useState(false);
+
+            return (
+                <header className="site-header">
+                    <div className="container">
+                        <a href="#" className="logo">{PORTFOLIO_DATA.name}</a>
+
+                        <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)} style={{ display: 'none' }}>
+                            {/* Note: Mobile menu CSS interactivity would typically be handled here for a full reactive menu */}
+                            {isOpen ? <IconX /> : <IconMenu />}
+                        </button>
+
+                        <nav className={`main-nav ${isOpen ? 'open' : ''}`}>
+                            <ul>
+                                <li><a href="#about">About</a></li>
+                                <li><a href="#skills">Skills</a></li>
+                                <li><a href="#experience">Experience</a></li>
+                                <li><a href="#projects">Projects</a></li>
+                                <li><a href="#contact">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </header>
+            );
+        };
+
+        const Hero = () => (
+            <section id="hero" className="hero-section">
+                <div className="container hero-content">
+                    <h1 className="hero-name">{PORTFOLIO_DATA.name}</h1>
+                    <h2 className="hero-role">{PORTFOLIO_DATA.role}</h2>
+                    <p className="hero-headline">{PORTFOLIO_DATA.headline}</p>
+                    <div className="hero-cta">
+                        <a href="#projects" className="btn btn-primary">View Projects</a>
+                        <a href="resume.pdf" className="btn btn-secondary" target="_blank" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                            Download Resume <IconDownload />
+                        </a>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const About = () => (
+            <section id="about" className="section about-section">
+                <div className="container">
+                    <h2 className="section-title">About Me</h2>
+                    <div className="about-content">
+                        <p>{PORTFOLIO_DATA.about}</p>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Skills = () => (
+            <section id="skills" className="section skills-section">
+                <div className="container">
+                    <h2 className="section-title">Core Skills</h2>
+                    <div className="skills-grid">
+                        {PORTFOLIO_DATA.skills.map((cat, idx) => (
+                            <div key={idx} className="skill-category">
+                                <h3>{cat.category}</h3>
+                                <ul>
+                                    {cat.items.map((item, i) => <li key={i}>{item}</li>)}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Experience = () => (
+            <section id="experience" className="section experience-section">
+                <div className="container">
+                    <h2 className="section-title">Work Experience</h2>
+                    <div className="timeline">
+                        {PORTFOLIO_DATA.experience.map((job, idx) => (
+                            <div key={idx} className="timeline-item">
+                                <div className="timeline-header">
+                                    <h3>{job.role}</h3>
+                                    <span className="company">{job.company}</span>
+                                    <span className="date">{job.period}</span>
+                                </div>
+                                <div className="timeline-body">
+                                    <ul>
+                                        {job.points.map((pt, i) => <li key={i}>{pt}</li>)}
+                                    </ul>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const ProjectCard = ({ project }) => {
+            const [expanded, setExpanded] = useState(false);
+
+            return (
+                <div className="project-card">
+                    <div className="card-header">
+                        <h3>{project.title}</h3>
+                        <span className="industry">{project.client}</span>
+                    </div>
+                    <div className="card-body">
+                        <div className="project-detail">
+                            <strong>Problem:</strong>
+                            <p>{project.problem}</p>
+                        </div>
+                        <div className="project-detail">
+                            <strong>Role:</strong>
+                            <p>{project.role}</p>
+                        </div>
+
+                        <button
+                            className="btn-text"
+                            onClick={() => setExpanded(!expanded)}
+                            style={{ color: 'var(--color-secondary)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold', marginTop: '10px', display: 'flex', alignItems: 'center' }}
+                        >
+                            {expanded ? "Show Less" : "View Details"}
+                            <span style={{ marginLeft: '5px' }}>
+                                {expanded ? <IconChevronUp /> : <IconChevronDown />}
+                            </span>
+                        </button>
+
+                        {expanded && (
+                            <div style={{ marginTop: '15px', borderTop: '1px solid #eee', paddingTop: '10px', animation: 'fadeIn 0.3s' }}>
+                                <div className="project-detail">
+                                    <strong>Delivered:</strong>
+                                    <p>{project.delivered}</p>
+                                </div>
+                                <div className="project-detail">
+                                    <strong>Impact:</strong>
+                                    <p>{project.impact}</p>
+                                </div>
+                                {project.billing && (
+                                    <div className="project-detail" style={{ backgroundColor: '#f0fdf4', padding: '8px', borderRadius: '4px' }}>
+                                        <strong style={{ color: '#166534' }}>Billing & Resource Mgmt:</strong>
+                                        <p style={{ color: '#14532d', fontSize: '0.9rem' }}>{project.billing}</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const Projects = () => (
+            <section id="projects" className="section projects-section">
+                <div className="container">
+                    <h2 className="section-title">Key Projects</h2>
+                    <div className="projects-grid">
+                        {PORTFOLIO_DATA.projects.map((proj, idx) => (
+                            <ProjectCard key={idx} project={proj} />
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Contact = () => (
+            <section id="contact" className="section contact-section">
+                <div className="container contact-content">
+                    <h2 className="section-title">Get In Touch</h2>
+                    <p>Let’s talk about solving business problems.</p>
+                    <div className="contact-links">
+                        <a href={`mailto:${PORTFOLIO_DATA.email}`} className="contact-btn">Email Me</a>
+                        <a href={PORTFOLIO_DATA.linkedin} className="contact-btn" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer className="site-footer">
+                <div className="container">
+                    <p>&copy; 2024 {PORTFOLIO_DATA.name}. Built with React.</p>
+                </div>
+            </footer>
+        );
+
+        // --- Main App ---
+        const App = () => {
+            return (
+                <React.Fragment>
+                    <Nav />
+                    <Hero />
+                    <About />
+                    <Skills />
+                    <Experience />
+                    <Projects />
+                    <Contact />
+                    <Footer />
+                </React.Fragment>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
