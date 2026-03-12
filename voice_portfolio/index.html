@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guna Sundari | Professional Voice Artist</title>
+    <meta name="description" content="Portfolio of Guna Sundari, professional voice artist specializing in commercials, narration, and character voice.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class='bx bx-microphone-alt'></i> VoiceFolio
+            </a>
+            <ul class="nav-links">
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#demos">Demos</a></li>
+
+                <li><a href="#contact" class="btn-primary-outline">Contact Me</a></li>
+                <li><button class="btn-icon" id="shareBtn" aria-label="Share Portfolio"><i class='bx bx-share-alt'></i></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero / Profile Section -->
+    <section id="profile" class="hero">
+        <div class="hero-bg-glow"></div>
+        <div class="container hero-content">
+            <div class="profile-image-container">
+                <div class="profile-glow"></div>
+                <img src="assets/profile.png" alt="Guna Sundari" class="profile-image">
+            </div>
+            <div class="profile-details">
+                <span class="badge-primary">Available for Work</span>
+                <h1 class="name">Guna Sundari</h1>
+                <h2 class="role">Professional Voice Artist & Narrator</h2>
+                <p class="bio">
+                    Bringing scripts to life with a versatile, warm, and engaging voice. With over 5 years of experience in commercials, e-learning, and character voice acting, I deliver broadcast-quality audio from my professional home studio.
+                </p>
+                
+                <div class="voice-attributes">
+                    <div class="attribute-pill"><i class='bx bx-user'></i> Female (25)</div>
+                    <div class="attribute-pill"><i class='bx bx-music'></i> Warm, Energetic, Authoritative</div>
+                    <div class="attribute-pill"><i class='bx bx-world'></i> English, Tamil</div>
+                    <div class="attribute-pill"><i class='bx bx-message-rounded'></i> Neutral American Accent</div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#demos" class="btn-primary"><i class='bx bx-play-circle'></i> Listen to Demos</a>
+                    <a href="#contact" class="btn-secondary"><i class='bx bx-envelope'></i> Hire Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Demos Section -->
+    <section id="demos" class="demos-section">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Voice Demos</h2>
+                    <p class="section-subtitle">Listen to my latest work across different categories.</p>
+                </div>
+                <!-- Simulated Upload Button for the Artist User -->
+                <button class="btn-upload" id="uploadDemoBtn"><i class='bx bx-cloud-upload'></i> Upload Demo</button>
+            </div>
+
+
+
+            <div class="demo-list">
+                <!-- Demo Item 1 -->
+                <div class="demo-item" data-src="audio.mp3">
+                    <button class="play-btn"><i class='bx bx-play'></i></button>
+                    <div class="demo-info">
+                        <h3 class="demo-title">Demo 1</h3>
+                    </div>
+                    <div class="demo-meta">
+                        <span class="demo-duration">1:04</span>
+                    </div>
+                    <button class="download-btn" aria-label="Download"><i class='bx bx-download'></i></button>
+                </div>
+
+                <!-- Demo Item 2 -->
+                <div class="demo-item" data-src="audio%20(1).mp3">
+                    <button class="play-btn"><i class='bx bx-play'></i></button>
+                    <div class="demo-info">
+                        <h3 class="demo-title">Demo 2</h3>
+                    </div>
+                    <div class="demo-meta">
+                        <span class="demo-duration">2:15</span>
+                    </div>
+                    <button class="download-btn" aria-label="Download"><i class='bx bx-download'></i></button>
+                </div>
+
+                <!-- Demo Item 3 -->
+                <div class="demo-item" data-src="audio%20(2).mp3">
+                    <button class="play-btn"><i class='bx bx-play'></i></button>
+                    <div class="demo-info">
+                        <h3 class="demo-title">Demo 3</h3>
+                    </div>
+                    <div class="demo-meta">
+                        <span class="demo-duration">1:45</span>
+                    </div>
+                    <button class="download-btn" aria-label="Download"><i class='bx bx-download'></i></button>
+                </div>
+
+                 <!-- Demo Item 4 -->
+                 <div class="demo-item" data-src="audio%20(3).mp3">
+                    <button class="play-btn"><i class='bx bx-play'></i></button>
+                    <div class="demo-info">
+                        <h3 class="demo-title">Demo 4</h3>
+                    </div>
+                    <div class="demo-meta">
+                        <span class="demo-duration">3:10</span>
+                    </div>
+                    <button class="download-btn" aria-label="Download"><i class='bx bx-download'></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-card">
+                <div class="contact-info">
+                    <h2>Let's work together</h2>
+                    <p>Have a project in mind? Reach out to discuss rates, availability, or to request a custom audition.</p>
+                    
+                    <div class="contact-methods">
+                        <a href="mailto:workguna17@gmail.com" class="method">
+                            <i class='bx bx-envelope'></i> workguna17@gmail.com
+                        </a>
+                        <a href="#" class="method">
+                            <i class='bx bx-phone'></i> 9840581456
+                        </a>
+
+                    </div>
+                </div>
+                
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="john@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="project">Project Type</label>
+                        <select id="project">
+                            <option value="commercial">Commercial</option>
+                            <option value="narration">Narration / Documentary</option>
+                            <option value="elearning">E-Learning</option>
+                            <option value="character">Character / Video Game</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Project Details</label>
+                        <textarea id="message" rows="4" placeholder="Tell me about your project, word count, usage rights, etc." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-100">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Audio Player (Sticky) -->
+    <div class="audio-player-bar hidden" id="audioPlayerBar">
+        <div class="container player-container">
+            <div class="now-playing">
+                <div class="player-icon"><i class='bx bx-music'></i></div>
+                <div class="track-info">
+                    <div class="track-title" id="playerTitle">Select a demo to play</div>
+                    <div class="track-artist">Guna Sundari</div>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <audio id="mainAudio" src=""></audio>
+                <div class="controls-main">
+                    <button class="ctrl-btn" id="ctrlPrev"><i class='bx bx-skip-previous'></i></button>
+                    <button class="ctrl-btn play-pause-btn" id="ctrlPlay"><i class='bx bx-play'></i></button>
+                    <button class="ctrl-btn" id="ctrlNext"><i class='bx bx-skip-next'></i></button>
+                </div>
+                <div class="progress-container" id="progressContainer">
+                    <span class="time current-time" id="currentTime">0:00</span>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                    <span class="time total-time" id="totalTime">0:00</span>
+                </div>
+            </div>
+            
+            <div class="player-actions">
+                <button class="vol-btn"><i class='bx bx-volume-full'></i></button>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                <button class="close-player" id="closePlayer"><i class='bx bx-x'></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal (Mock) -->
+    <div class="modal-overlay hidden" id="uploadModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Upload New Demo</h3>
+                <button class="close-modal" id="closeUpload"><i class='bx bx-x'></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="demoFile" accept="audio/*" class="hidden">
+                    <i class='bx bx-cloud-upload upload-icon'></i>
+                    <p>Select your audio file here</p>
+                    <button class="btn-secondary-outline" id="browseBtn">Browse Files</button>
+                    <p class="upload-hint" id="fileNameHint">Supported formats: MP3, WAV (Max 50MB)</p>
+                </div>
+                <div class="form-group mt-3">
+                    <label>Demo Title</label>
+                    <input type="text" id="demoTitle" placeholder="e.g. New Demo 5">
+                </div>
+                <div class="form-group">
+                    <label>Project</label>
+                    <select id="demoProject">
+                        <option>Project 1</option>
+                        <option>Project 2</option>
+                        <option>Project 3</option>
+                        <option>None</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary w-100" id="saveDemoBtn">Save Demo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
