@@ -1,43 +1,38 @@
 @echo off
-echo Starting Git synchronization...
+set GIT_PATH="C:\Program Files\Git\cmd\git.exe"
 
-REM Check if git is installed
-where git >nul 2>nul
-if %ERRORLEVEL% neq 0 (
-    echo Error: Git is not found in your PATH. Please install Git to continue.
-    pause
-    exit /b
-)
+echo Using Git at %GIT_PATH%
 
-REM Initialize git if not present
-if not exist .git (
-    echo Initializing new Git repository...
-    git init
-)
+echo Setting up credential helper to ensure popup appears...
+%GIT_PATH% config --global credential.helper manager
 
-REM Add all files
-echo Adding files to staging...
-git add .
+echo Configuring Git user...
+%GIT_PATH% config user.name "Guna Sundari S"
+%GIT_PATH% config user.email "guna.sundarirk@gmail.com"
 
-REM Commit changes
-echo Committing changes...
-git commit -m "Update portfolio: Resume link fix and project files"
+echo.
+echo ---------------------------------------------------
+echo Attempting to PUSH to GitHub...
+echo.
+echo NOTE: A GitHub Login window should appear now.
+echo If it does not appear, check this terminal window
+echo as it might be asking for your username/password here.
+echo ---------------------------------------------------
+echo.
 
-REM Ensure branch is main
-git branch -M main
-
-REM Configure remote (remove old one if exists to ensure correct link)
-git remote remove origin >nul 2>&1
-git remote add origin https://github.com/Gunasundari17/Portfolio.git
-
-REM Push to remote
-echo Pushing to GitHub...
-git push -u origin main
+%GIT_PATH% push -u origin main
 
 if %ERRORLEVEL% equ 0 (
-    echo Successfully pushed to GitHub!
+    echo.
+    echo ================================
+    echo    SUCCESS! Code pushed.
+    echo ================================
 ) else (
-    echo Push failed. Please check your internet connection or GitHub credentials.
+    echo.
+    echo ================================
+    echo    Push FAILED.
+    echo    Please check your internet or
+    echo    try logging in manually.
+    echo ================================
 )
-
 pause
