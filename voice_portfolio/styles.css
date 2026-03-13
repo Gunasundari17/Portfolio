@@ -642,6 +642,11 @@ a {
     background: rgba(155, 81, 224, 0.05);
 }
 
+.form-group select option {
+    background-color: #000000;
+    color: #ffffff;
+}
+
 /* Audio Player Bottom Bar */
 .audio-player-bar {
     position: fixed;
